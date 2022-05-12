@@ -8,8 +8,8 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./workspace:/home/coder/workspace
-      - ./sample:/home/coder/sample
+      - ./workspace:/home/coder/workspace:rw
+      - ./sample:/home/coder/sample:ro
     entrypoint: >
       sh -c "        
         sudo apt update
