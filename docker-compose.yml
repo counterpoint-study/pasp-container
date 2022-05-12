@@ -1,0 +1,29 @@
+version: "3"
+services:
+  code:
+    image: codercom/code-server
+    restart: unless-stopped
+    environment:
+      PASSWORD: "geidai"
+    ports:
+      - 8080:8080
+    volumes:
+      - ./workspace:/home/coder/workspace
+      - ./sample:/home/coder/sample
+    entrypoint: >
+      sh -c "        
+        sudo apt update
+        sudo apt install -y libasound2-dev build-essential cmake 
+        cd /tmp
+        git clone https://github.com/thestk/stk
+        cd stk
+        cmake .
+        make -j4
+        sudo cp libstk.a /usr/local/lib
+        sudo cp -r rawwaves /usr/local/share/stk
+        sudo cp -r include /usr/local/include/stk
+        cd
+        sudo echo 'You can only use STK' > /etc/sudoers.d/README
+        sudo rm /etc/sudoers.d/nopasswd
+        code-server --host "0.0.0.0"
+      "
