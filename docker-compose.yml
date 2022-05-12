@@ -3,6 +3,7 @@ services:
   code:
     image: codercom/code-server
     restart: unless-stopped
+    container_name: stk
     environment:
       PASSWORD: "geidai"
     ports:
